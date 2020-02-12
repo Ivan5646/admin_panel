@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Template edit</title>
+</head>
+<body>
+	<div class="reformed-form">
+
+		<img src="{{event.image}}" alt="" width="500px" id="image_preview"><br>
+		<fieldset>
+			<label for="image_file">New image</label>
+			<input type="file" id="image_file" onchange="uploadfile();"/>
+		</fieldset>
+
+		<form method="post" name="manager_template" id="manager_template" action="/manager/info">
+			<dl><dt><label for="background">image file</label>
+					<input type="text"  style="width:400px;" id="background" readonly name="background" value="{{event.image}}" />
+			</dd></dl>
+			<dl><dt><label for="name">name</label></dt><dd>
+					<input type="text" style="width:400px;" id="name" name="name" value="{{event.name}}" />
+			</dd></dl>
+			<dl><dt><label for="description">description</label></dt><dd>
+					<textarea cols="100" rows="8" id="description" name="description">{{event.description}}</textarea>
+			</dd></dl>
+			<dl><dt><label for="date">date</label></dt><dd>
+				<textarea cols="100" rows="8" id="date" name="date">{{event.date}}</textarea>
+			</dd></dl>
+			<dl><dt><label for="item">item description</label></dt><dd>
+				<textarea cols="100" rows="8" id="item" name="item">{{item.name}}</textarea>
+			</dd></dl>
+
+			<fieldset>
+				<label for="old_price">old_price</label>
+				<input type="text" id="old_price" name="old_price" value="{{item.old_price}}" />
+			</fieldset>
+
+			<fieldset>
+				<label for="price">price</label>
+				<input type="text" id="price" name="price" value="{{item.price}}"/>
+			</fieldset>
+
+			<dl><dt><label for="telegram_notify">telegram_notify</label></dt><dd>
+					<input type="text" cols="100" rows="8" id="telegram_notify" name="telegram_notify" value="{{merchant.telegram_notify}}" />
+			</dd></dl>
+
+
+			<div id="submit_buttons">
+				<button type="submit">Submit</button>
+			</div>
+		</form>
+	</div>
+	<script>
+		function update_image(image) {
+			document.getElementById("background").value = "https://{{event.host}}/"+image;
+			document.getElementById("image_preview").src = "/"+image;
+		}
+
+		function uploadfile() {
+			let photo = document.getElementById("image_file").files[0];
+			let formData = new FormData();
+
+			formData.append("image", photo);
+			fetch('/uploadfile', {method: "POST", body: formData}).then(response => response.json()).then(
+				data => update_image(data)
+				);
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Category edit</title>
+	<!-- inject:css -->
+	<!-- endinject -->
+	<script>
+		var default_category = '{{cat.name}}';
+		function check_code(code_type, element_id) {
+			var xhr = new XMLHttpRequest();
+			var url = "/checkcode";
+			var lead_request = {};
+			var code_value = document.getElementById(element_id).value;
+			if (default_category != code_value) {
+				xhr.open("POST", url, true);
+				xhr.setRequestHeader("Content-Type", "application/json");
+				xhr.onreadystatechange = function () {
+					if (xhr.readyState === 4 && xhr.status === 200) {
+						if (xhr.responseText == 'error') {
+							alert('code already exist')
+							document.getElementById("submit_buttons").disabled = true;
+						}
+						else {
+							document.getElementById("submit_buttons").disabled = false;
+						}
+					}
+				};
+				var code_request = {};
+				code_request['code_type'] = code_type;
+				code_request['code_value'] = code_value;
+				var data = JSON.stringify(code_request);
+				xhr.send(data);
+			}
+			else {
+				document.getElementById("submit_buttons").disabled = false;
+			}
+		}
+	</script>
+</head>
+
+<body>
+	<div class="reformed-form form">
+		<form method="post" name="manager_template" id="manager_template" action="/manager/category">
+			<dl class="nameWrapper">
+				<dt><label for="name" class="form__title">name</label></dt>
+				<dd>
+					<input class="form__field" type="text" id="name" name="name" readonly value="{{cat.name}}"
+						onchange="check_code('category','name');" />
+				</dd>
+			</dl>
+			<dl>
+				<dt><label for="title" class="form__title">title</label></dt>
+				<dd>
+					<textarea class="form__field form__field--area" cols="100" rows="8" id="title" name="title">{{cat.title}}</textarea>
+				</dd>
+			</dl>
+			<dl>
+				<dt><label for="description" class="form__title">description</label></dt>
+				<dd>
+					<textarea class="form__field form__field--area" cols="100" rows="8" id="description" name="description">{{cat.description}}</textarea>
+				</dd>
+			</dl>
+			<dl>
+				<dt><label for="active" class="form__title">is active</label></dt>
+				<dd>
+					<input class="form__field" type="text" id="active" name="active" value="{{cat.active}}" />
+				</dd>
+			</dl>
+			<dl>
+				<dt><label for="sort_order" class="form__title">sort order</label></dt>
+				<dd>
+					<input class="form__field" type="text" id="sort_order" name="sort_order" value="{{cat.sort_order}}" />
+				</dd>
+			</dl>
+
+
+			<div>
+				<button type="submit" id="submit_buttons" class="form__submit-btn">Submit</button>
+			</div>
+		</form>
+	</div>
+</body>
+
+</html>

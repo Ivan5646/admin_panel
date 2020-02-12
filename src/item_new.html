@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Item edit</title>
+	<style>
+		fieldset {
+			border:none;
+		}
+	</style>
+</head>
+
+<body>
+		<div>
+				<p>Inactive Items</p>
+				<ul>
+					{% for item in inactive%}
+					<li><a href="/manager/item?code={{item['code']}}">{{item['name']}}</a></li>
+					{% end %}
+				</ul>
+			</div>
+	<div class="reformed-form">
+			<img src="" alt="" width="500px" id="image_preview"><br>
+			<fieldset>
+				<label for="image_file">New image</label>
+				<input type="file" id="image_file" onchange="uploadfile();"/>
+			</fieldset>
+		<form method="post" name="manager_template" id="manager_template" action="/manager/item">
+			<fieldset>
+				<label for="code">code</label>
+				<input type="text" id="code" name="code" value="" onchange="check_code('item', 'code')"/>
+			</fieldset>
+
+			<fieldset>
+				<label for="name">name</label>
+				<input type="text" id="name" name="name" value="" />
+			</fieldset>
+
+			<fieldset>
+				<label for="description">description</label><br>
+				<textarea cols="100" rows="8" id="description" name="description"></textarea>
+			</fieldset>
+
+			<fieldset>
+				<label for="description">description2</label><br>
+				<textarea cols="100" rows="8" id="description2" name="description2"></textarea>
+			</fieldset>
+
+			<fieldset>
+				<label for="active">is active</label>
+				<input type="text" id="active" name="active" value="" />
+			</fieldset>
+
+			<fieldset>
+				<label for="image">image</label>
+				<input type="text" id="image" readonly name="image" value="" />
+			</fieldset>
+
+			<fieldset>
+				<label for="category">category</label>
+				<select id="category" name="category">
+					{% for categeory in categories %}
+					<option value="{{categeory['name']}}" >
+						{{categeory['title']}}{{categeory['active']}}</option>
+					{% end %}
+				</select>
+			</fieldset>
+
+			<fieldset>
+				<label for="old_price">old_price</label>
+				<input type="text" id="old_price" name="old_price" value="" />
+			</fieldset>
+
+			<fieldset>
+				<label for="price">price</label>
+				<input type="text" id="price" name="price" value="0" onchange="count_economics()" />
+			</fieldset>
+
+			<fieldset>
+				<label for="ntz_price">ntz_price</label>
+				<input type="text" id="ntz_price" name="ntz_price" value="0" onchange="count_economics()" />
+			</fieldset>
+
+			<fieldset>
+				<label for="purchase_price">purchase_price</label>
+				<input type="text" id="purchase_price" name="purchase_price" value="0" onchange="count_economics()" />
+			</fieldset>
+
+			<fieldset>
+				<label for="weight">weight</label>
+				<input type="text" id="weight" name="weight" value="0" />
+			</fieldset>
+
+			<fieldset>
+
+				<label for="sort_order">sort order</label>
+				<input type="text" id="sort_order" name="sort_order" value="0" />
+			</fieldset>
+			<p>
+				<p>Economics</p>
+				<p id="count_economics">
+					Tax: <span id="count_tax"></span> {{currency}}<br>
+					Marketing: <span id="marketing"></span> {{currency}}<br>					
+					Merchant revenue: <span id="count_revenue"></span> {{currency}}<br>
+					Merchant profit: <b><span id="count_profit"></span></b> {{currency}}<br>
+					<span id="warning"></span>
+				</p>
+			</p>
+			<div>
+				<button type="submit" id="submit_buttons">Submit</button>
+			</div>
+		</form>
+	</div>
+
+	<script>
+		function check_code(code_type, element_id) {
+			var xhr = new XMLHttpRequest();
+			var url = "/checkcode";
+			var lead_request = {};
+			var code_value = document.getElementById(element_id).value;
+				xhr.open("POST", url, true);
+				xhr.setRequestHeader("Content-Type", "application/json");
+				xhr.onreadystatechange = function () {
+				if (xhr.readyState === 4 && xhr.status === 200) {
+					if (xhr.responseText == 'error') {
+						alert('code already exist')
+						document.getElementById("submit_buttons").disabled = true;
+					}
+					else {
+						document.getElementById("submit_buttons").disabled = false;
+					}
+				}
+			}
+				var code_request = {};
+				code_request['code_type'] = code_type;
+				code_request['code_value'] = code_value;
+				var data = JSON.stringify(code_request);
+				xhr.send(data);
+
+		}
+		function count_economics() {
+		var tax = {{ tax }};
+		var price = document.getElementById("price").value;
+		var ntz_price = document.getElementById("ntz_price").value;
+		var purchase_price = document.getElementById("purchase_price").value;
+		var count_tax = Math.round(price / (100 + tax) * tax);
+		var price_without_tax = price - count_tax;
+		if (ntz_price > price) {
+			document.getElementById("ntz_price").value=price;
+			ntz_price=price;
+		}
+		if (ntz_price >= price_without_tax) {
+			ntz_price = price_without_tax;
+		}
+		console.log("ntz_price",ntz_price, "price_without_tax",price_without_tax);
+		var marketing = Math.round(ntz_price/100*59);
+
+		var count_revenue = Math.round((ntz_price) / 100 * 30) + (price_without_tax - ntz_price);
+
+		document.getElementById("count_tax").innerHTML = count_tax;
+		document.getElementById("count_revenue").innerHTML = count_revenue;
+		document.getElementById("count_profit").innerHTML = count_revenue - purchase_price;
+		document.getElementById("marketing").innerHTML = marketing;
+
+		if (count_revenue - purchase_price > 0) {
+			document.getElementById("count_profit").style.color = "green";
+			document.getElementById("submit_buttons").disabled = false;
+
+		}
+		else {
+			document.getElementById("count_profit").style.color = "red";
+			document.getElementById("submit_buttons").disabled = true;
+
+		}
+		if(ntz_price != price_without_tax) {
+			document.getElementById("warning").innerHTML = "WARNING NTZ_PRICE != PRICE";
+		}
+		else{
+			document.getElementById("warning").innerHTML = "";
+
+		}
+		}
+		count_economics();
+
+		function update_image(image) {
+			document.getElementById("image").value = image;
+			document.getElementById("image_preview").src = "/"+image;
+		}
+
+		function uploadfile() {
+			let photo = document.getElementById("image_file").files[0];
+			let formData = new FormData();
+
+			formData.append("image", photo);
+			fetch('/uploadfile', {method: "POST", body: formData}).then(response => response.json()).then(
+				data => update_image(data)
+				);
+		}
+
+	</script>
+
+</body>
+
+</html>

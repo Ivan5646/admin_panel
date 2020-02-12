@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Pickup new</title>
+	
+</head>
+<body>
+	<div>
+		<p>All Pickpoints - click to edit</p>
+		<ul>
+			{% for point in points%}
+			<li><a href="/manager/pickup?code={{point['id']}}">{{point['name']}} ({% if point['active'] %} ACTIVE {%else%} NOT ACTIVE {%end%})</a></li>
+			{% end %}
+		</ul>
+	</div>
+	<div class="reformed-form">
+		<form method="post" name="manager_template" id="manager_template" action="/manager/pickup">
+			<dl><dt><label for="name">name</label></dt><dd>
+					<input type="text" id="name" name="name" value=""/>
+			</dd></dl>
+			<dl><dt><label for="address">address</label></dt><dd>
+					<textarea cols="100" rows="4" id="address" name="address"></textarea>
+				</dd></dl>
+			<dl><dt><label for="price">price</label></dt><dd>
+					<input type="text" id="price" name="price" value="0" />
+			</dd></dl>
+			<dl><dt><label for="active">is active</label></dt><dd>
+					<input type="text" id="active" name="active" value="1" />
+			</dd></dl>
+
+			<div >
+				<button id="submit_buttons" type="submit">Submit</button>
+			</div>
+			</form>
+	</div>
+</body>
+<script type="text/javascript" src="/manager/manager.js"></script>
+
+</html>

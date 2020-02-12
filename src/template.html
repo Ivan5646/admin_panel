@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Template edit</title>
+</head>
+<body>
+	<div class="reformed-form">
+		<img src="/{{merchant.background}}" alt="" width="500px" id="image_preview"><br>
+		<fieldset>
+			<label for="image_file">New image</label>
+			<input type="file" id="image_file" onchange="uploadfile();"/>
+		</fieldset>
+		<form method="post" name="manager_template" id="manager_template" action="/manager/template">
+			<dl><dt><label for="name">name</label></dt><dd>
+					<input type="text" cols="100" rows="8" id="name" name="name" value="{{merchant.name}}" />
+			</dd></dl>
+			<dl><dt><label for="description">description</label></dt><dd>
+					<textarea cols="100" rows="8" id="description" name="description">{{merchant.description}}</textarea>
+			</dd></dl>
+			<dl><dt><label for="title">title</label></dt><dd>
+				<textarea cols="100" rows="8" id="title" name="title">{{merchant.title}}</textarea>
+			</dd></dl>
+			<dl><dt><label for="teaser">teaser</label></dt><dd>
+					<textarea cols="100" rows="8" id="teaser" name="teaser">{{merchant.teaser}}</textarea>
+			</dd></dl>
+			<dl><dt><label for="main_text">main_text</label></dt><dd>
+					<textarea cols="100" rows="8"  id="main_text" name="main_text">{{merchant.main_text}}</textarea>
+			</dd></dl>
+
+			<dl><dt><label for="background">background</label></dt><dd>
+					<input type="text" cols="100" rows="8" id="background" name="background" value="{{merchant.background}}" />
+			</dd></dl>
+			<dl><dt><label for="telegram_notify">telegram_notify</label></dt><dd>
+					<input type="text" cols="100" rows="8" id="telegram_notify" name="telegram_notify" value="{{merchant.telegram_notify}}" />
+			</dd></dl>
+
+
+			<div id="submit_buttons">
+				<button type="submit">Submit</button>
+			</div>
+			</form>
+	</div>
+	<script>
+		function update_image(image) {
+			document.getElementById("background").value = image;
+			document.getElementById("image_preview").src = "/"+image;
+		}
+
+		function uploadfile() {
+			let photo = document.getElementById("image_file").files[0];
+			let formData = new FormData();
+
+			formData.append("image", photo);
+			fetch('/uploadfile', {method: "POST", body: formData}).then(response => response.json()).then(
+				data => update_image(data)
+				);
+		}
+	</script>
+</body>
+</html>
