@@ -19,7 +19,7 @@ var uglify = require('gulp-uglify');
 var replace = require('gulp-replace');
 var imagemin = require('gulp-imagemin');
 
-var htmlFile = "login";
+var htmlFile = "orders";
 
 gulp.task('connect', function() {
     connect.server({

@@ -5,20 +5,25 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Orders</title>
+	<!-- inject:css -->
+	<!-- endinject -->
 </head>
 <body>
-	{% for order in orders%}
-	<p>
-		<b>id {{order['id']}}</b><br>
-		total: {{order['total']}} {{order['currency']}} {{order['order_type']}} {{order['ntz_login']}}<br>
-		name: {{order['name']}}<br>
-		phone: {{order['phone']}}<br>
-		email: {{order['email']}}<br>
-		<p>order items:<br> {% raw order['text_description']%}</p>
-		delivery text: {{order['delivery_text']}}<br>
-		delivery total: {{order['delivery_total']}} {{order['currency']}}<br>
-		<hr>
-	</p>
-	{% end %}
+	<div class="form">
+		{% for order in orders%}
+		<p>
+			<b>id {{order['id']}}</b><br>
+			total: {{order['total']}} {{order['currency']}} {{order['order_type']}} {{order['ntz_login']}}<br>
+			name: {{order['name']}}<br>
+			phone: {{order['phone']}}<br>
+			email: {{order['email']}}<br>
+			<p>order items:<br> {% raw order['text_description']%}</p>
+			delivery text: {{order['delivery_text']}}<br>
+			delivery total: {{order['delivery_total']}} {{order['currency']}}<br>
+			<hr>
+		</p>
+		{% end %}
+	</div>
+
 </body>
 </html>
