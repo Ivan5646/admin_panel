@@ -11,9 +11,9 @@ dl {
     margin: 0;
 }
 
-fieldset {
-    margin-bottom: 30px;
-}
+// fieldset {
+//     margin-bottom: 30px;
+// }
 
 
 .form {
@@ -78,6 +78,25 @@ fieldset {
         cursor: pointer;
         font-size: 14px;
         color: #fff;
+    }
+
+    &__label-item {
+        display: inline-block;
+        margin-bottom: 10px;
+    }
+
+    &__info-fieldset {
+        margin-bottom: 30px;
+    }
+
+    &__item-info {
+        fieldset {
+            margin-bottom: 0px;
+        }
+    }
+
+    &__item-fieldset {
+        margin-bottom: 0;
     }
 }
 
