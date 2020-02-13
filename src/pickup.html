@@ -1,32 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Pickpoint edit</title>
-
+	<!-- inject:css -->
+	<!-- endinject -->
 </head>
+
 <body>
-	<div class="reformed-form">
+	<div class="reformed-form form">
 		<form method="post" name="manager_template" id="manager_template" action="/manager/pickup">
-			<dl><dt><label for="name">name</label></dt><dd>
-					<input type="text" id="name" name="name" value="{{point.name}}"/>
-			</dd></dl>
-			<dl><dt><label for="address">address</label></dt><dd>
-					<textarea cols="100" rows="4" id="address" name="address">{{point.address}}</textarea>
-				</dd></dl>
-			<dl><dt><label for="price">price</label></dt><dd>
-					<input type="text" id="price" name="price" value="{{point.price}}" />
-			</dd></dl>
-			<dl><dt><label for="active">is active</label></dt><dd>
-					<input type="text" id="active" name="active" value="{{point.active}}" />
-			</dd></dl>
-				<input type="hidden" id="code" name="code" value="{{point.id}}" />
-			<div >
-				<button id="submit_buttons" type="submit">Submit</button>
+			<dl>
+				<dt><label for="name" class="form__title">name</label></dt>
+				<dd>
+					<input type="text" id="name" name="name" value="{{point.name}}"  class="form__field" />
+				</dd>
+			</dl>
+			<dl>
+				<dt><label for="address" class="form__title">address</label></dt>
+				<dd>
+					<textarea id="address" name="address" class="form__field form__field--area">{{point.address}}</textarea>
+				</dd>
+			</dl>
+			<dl>
+				<dt><label for="price" class="form__title">price</label></dt>
+				<dd>
+					<input type="text" id="price" name="price" value="{{point.price}}" class="form__field" />
+				</dd>
+			</dl>
+			<dl>
+				<dt><label for="active" class="form__title">is active</label></dt>
+				<dd>
+					<input type="text" id="active" name="active" value="{{point.active}}" class="form__field" />
+				</dd>
+			</dl>
+			<input type="hidden" id="code" name="code" value="{{point.id}}" />
+			<div>
+				<button id="submit_buttons" type="submit" class="form__submit-btn">Submit</button>
 			</div>
-			</form>
+		</form>
 	</div>
 </body>
 
