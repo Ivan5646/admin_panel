@@ -30,78 +30,81 @@
 					<input type="text" id="code" name="code" readonly value="{{item.code}}" />
 				</fieldset>
 
-				<fieldset class="form__item-fieldset>
+				<fieldset class="form__item-fieldset">
 					<label for="name">name</label>
 					<input type="text" id="name" name="name" value="{{item.name}}" />
 				</fieldset>
 
-				<fieldset class="form__item-fieldset>
+				<fieldset class="form__item-fieldset">
 					<label for="description" class="form__label-item">description</label><br>
-					<textarea class="form__field form__field--area" id="description" name="description">{{item.description}}</textarea>
+					<textarea class="form__field form__field--area form__field--no-margin" id="description"
+						name="description">{{item.description}}</textarea>
 				</fieldset>
 
-				<fieldset class="form__item-fieldset>
+				<fieldset class="form__item-fieldset">
 					<label for="description" class="form__label-item">description2</label><br>
-					<textarea class="form__field form__field--area" id="description2" name="description2">{{item.description2}}</textarea>
+					<textarea class="form__field form__field--area" id="description2"
+						name="description2">{{item.description2}}</textarea>
 				</fieldset>
 
 				<div class="form__item-info">
-						<fieldset>
-								<label for="active">is active</label>
-								<input type="text" id="active" name="active" value="{{item.active}}" />
-							</fieldset>
-			
-							<fieldset>
-								<label for="image">image</label>
-								<input type="text" id="image" readonly name="image" value="{{item.image}}" />
-							</fieldset>
-			
-							<fieldset>
-								<label for="category">category</label>
-								<select id="category" name="category">
-									{% for categeory in categories %}
-									<option value="{{categeory['name']}}" {% if categeory['name'] == item.category%} selected
-										{% end %}>
-										{{categeory['title']}}{{categeory['active']}}</option>
-									{% end %}
-								</select>
-							</fieldset>
-			
-							<fieldset>
-								<label for="old_price">old_price</label>
-								<input type="text" id="old_price" name="old_price" value="{{item.old_price}}" />
-							</fieldset>
-			
-							<fieldset>
-								<label for="price">price</label>
-								<input type="text" id="price" name="price" value="{{item.price}}" onchange="count_economics()" />
-							</fieldset>
-			
-							<fieldset>
-								<label for="ntz_price">ntz_price</label>
-								<input type="text" id="ntz_price" name="ntz_price" value="{{item.ntz_price}}"
-									onchange="count_economics()" />
-							</fieldset>
-			
-							<fieldset>
-								<label for="purchase_price">purchase_price</label>
-								<input type="text" id="purchase_price" name="purchase_price" value="{{item.purchase_price}}"
-									onchange="count_economics()" />
-							</fieldset>
-			
-							<fieldset>
-								<label for="weight">weight</label>
-								<input type="text" id="weight" name="weight" value="{{item.weight}}" />
-							</fieldset>
-			
-							<fieldset>
-			
-								<label for="sort_order">sort order</label>
-								<input type="text" id="sort_order" name="sort_order" value="{{item.sort_order}}" />
-							</fieldset>
+					<fieldset>
+						<label for="active">is active</label>
+						<input type="text" id="active" name="active" value="{{item.active}}" />
+					</fieldset>
+
+					<fieldset>
+						<label for="image">image</label>
+						<input type="text" id="image" readonly name="image" value="{{item.image}}" />
+					</fieldset>
+
+					<fieldset>
+						<label for="category">category</label>
+						<select id="category" name="category">
+							{% for categeory in categories %}
+							<option value="{{categeory['name']}}" {% if categeory['name'] == item.category%} selected
+								{% end %}>
+								{{categeory['title']}}{{categeory['active']}}</option>
+							{% end %}
+						</select>
+					</fieldset>
+
+					<fieldset>
+						<label for="old_price">old_price</label>
+						<input type="text" id="old_price" name="old_price" value="{{item.old_price}}" />
+					</fieldset>
+
+					<fieldset>
+						<label for="price">price</label>
+						<input type="text" id="price" name="price" value="{{item.price}}"
+							onchange="count_economics()" />
+					</fieldset>
+
+					<fieldset>
+						<label for="ntz_price">ntz_price</label>
+						<input type="text" id="ntz_price" name="ntz_price" value="{{item.ntz_price}}"
+							onchange="count_economics()" />
+					</fieldset>
+
+					<fieldset>
+						<label for="purchase_price">purchase_price</label>
+						<input type="text" id="purchase_price" name="purchase_price" value="{{item.purchase_price}}"
+							onchange="count_economics()" />
+					</fieldset>
+
+					<fieldset>
+						<label for="weight">weight</label>
+						<input type="text" id="weight" name="weight" value="{{item.weight}}" />
+					</fieldset>
+
+					<fieldset>
+
+						<label for="sort_order">sort order</label>
+						<input type="text" id="sort_order" name="sort_order" value="{{item.sort_order}}" />
+					</fieldset>
 				</div>
 
-				<p>
+				<div class="form__bottom">
 					<p>Economics</p>
 					<p id="count_economics">
 						Tax: <span id="count_tax"></span> {{currency}}<br>
@@ -110,15 +113,15 @@
 						Merchant profit: <b><span id="count_profit"></span></b> {{currency}}<br>
 						<span id="warning"></span>
 					</p>
-				</p>
-				<div>
-					<button type="submit" id="submit_buttons" class="form__submit-btn">Submit</button>
+					<div>
+						<button type="submit" id="submit_buttons" class="form__submit-btn">Submit</button>
+					</div>
 				</div>
 			</form>
 		</div>
 	</div>
 
-	<script>
+	<!-- <script>
 		var default_category = '{{item.code}}';
 		function check_code(code_type, element_id) {
 			var xhr = new XMLHttpRequest();
@@ -150,7 +153,7 @@
 			}
 		}
 		function count_economics() {
-			var tax = {{ tax }
+			var tax = {{ tax 
 		};
 		var price = parseInt(document.getElementById("price").value);
 		var ntz_price = parseInt(document.getElementById("ntz_price").value);
@@ -207,8 +210,7 @@
 				data => update_image(data)
 			);
 		}
-
-	</script>
+	</script> -->
 
 </body>
 

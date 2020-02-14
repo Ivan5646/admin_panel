@@ -11,11 +11,6 @@ dl {
     margin: 0;
 }
 
-// fieldset {
-//     margin-bottom: 30px;
-// }
-
-
 .form {
     // padding: 45px 45px 35px;
     // border-radius: 4px;
@@ -58,11 +53,13 @@ dl {
             outline: none;
         }
 
-        
-
         &--area {
             width: 100%; //855px; //160 * 855
             height: 160px;
+        }
+
+        &--no-margin {
+            margin: 0;
         }
     }
 
@@ -89,14 +86,18 @@ dl {
         margin-bottom: 30px;
     }
 
-    &__item-info {
+    &__item-info {        
         fieldset {
-            margin-bottom: 0px;
+            margin-bottom: 0;
         }
     }
 
     &__item-fieldset {
         margin-bottom: 0;
+    }
+
+    &__bottom {
+        padding-left: 12px;
     }
 }
 
