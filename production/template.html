@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Template edit</title>
+	<!-- inject:css -->
+	<link rel="stylesheet" href="styles/main.css">
+	<!-- endinject -->
+</head>
+
+<body>
+	<div class="reformed-form form">
+		<div class="form__inner">
+			<img src="/{{merchant.background}}" alt="" width="500px" id="image_preview"><br>
+			<fieldset class="form__info-fieldset">
+				<label for="image_file" class="form__title">New image</label>
+				<input type="file" id="image_file" class="form__field form__field--narrow" onchange="uploadfile();" />
+			</fieldset>
+			<form method="post" name="manager_template" id="manager_template" action="/manager/template">
+				<dl>
+					<dt><label for="name" class="form__title">name</label></dt>
+					<dd>
+						<input type="text" id="name" name="name" value="{{merchant.name}}" class="form__field" />
+					</dd>
+				</dl>
+				<dl>
+					<dt><label for="description" class="form__title">description</label></dt>
+					<dd>
+						<textarea id="description" name="description"
+							class="form__field form__field--area">{{merchant.description}}</textarea>
+					</dd>
+				</dl>
+				<dl>
+					<dt><label for="title" class="form__title">title</label></dt>
+					<dd>
+						<textarea id="title" name="title"
+							class="form__field form__field--area">{{merchant.title}}</textarea>
+					</dd>
+				</dl>
+				<dl>
+					<dt><label for="teaser" class="form__title">teaser</label></dt>
+					<dd>
+						<textarea id="teaser" name="teaser"
+							class="form__field form__field--area">{{merchant.teaser}}</textarea>
+					</dd>
+				</dl>
+				<dl>
+					<dt><label for="main_text" class="form__title">main_text</label></dt>
+					<dd>
+						<textarea id="main_text" name="main_text"
+							class="form__field form__field--area">{{merchant.main_text}}</textarea>
+					</dd>
+				</dl>
+
+				<dl>
+					<dt><label for="background" class="form__title">background</label></dt>
+					<dd>
+						<input id="background" name="background" value="{{merchant.background}}" class="form__field" />
+					</dd>
+				</dl>
+				<dl>
+					<dt><label for="telegram_notify" class="form__title">telegram_notify</label></dt>
+					<dd>
+						<input rows="8" id="telegram_notify" name="telegram_notify" value="{{merchant.telegram_notify}}"
+							class="form__field" />
+					</dd>
+				</dl>
+				<div id="submit_buttons">
+					<button type="submit" class="form__submit-btn">Submit</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<script>
+		function update_image(image) {
+			document.getElementById("background").value = image;
+			document.getElementById("image_preview").src = "/" + image;
+		}
+
+		function uploadfile() {
+			let photo = document.getElementById("image_file").files[0];
+			let formData = new FormData();
+
+			formData.append("image", photo);
+			fetch('/uploadfile', { method: "POST", body: formData }).then(response => response.json()).then(
+				data => update_image(data)
+			);
+		}
+	</script>
+</body>
+
+</html>

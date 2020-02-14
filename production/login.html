@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Auth form</title>
+	<!-- inject:css -->
+	<link rel="stylesheet" href="styles/main.css">
+	<!-- endinject -->
+</head>
+
+<body>
+	<div class="reformed-form form">
+		<form method="post" name="manager_login" id="manager_login" action="/manager/login">
+			<dl>
+				<dt>
+					<label for="login" class="form__title">Login</label>
+				</dt>
+				<dd><input class="form__field" type="text" id="login" name="login" /></dd>
+			</dl>
+			<dl>
+				<dt>
+					<label for="password" class="form__title">Password</label>
+				</dt>
+				<dd><input class="form__field" type="password" id="password" name="password" /></dd>
+			</dl>
+			<div id="submit_buttons">
+				<button type="submit" class="form__submit-btn">Submit</button>
+			</div>
+		</form>
+	</div>
+</body>
+
+</html>

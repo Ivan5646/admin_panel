@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Pickup new</title>
+	<!-- inject:css -->
+	<link rel="stylesheet" href="styles/main.css">
+	<!-- endinject -->
+</head>
+
+<body>
+	<div class="form">
+		<div>
+			<p class="form__title">All Pickpoints - click to edit</p>
+			<ul>
+				{% for point in points%}
+				<li><a href="/manager/pickup?code={{point['id']}}">{{point['name']}} ({% if point['active'] %} ACTIVE
+						{%else%} NOT ACTIVE {%end%})</a></li>
+				{% end %}
+			</ul>
+		</div>
+		<div class="reformed-form">
+			<form method="post" name="manager_template" id="manager_template" action="/manager/pickup">
+				<dl>
+					<dt><label for="name" class="form__title">name</label></dt>
+					<dd>
+						<input type="text" id="name" name="name" value="" class="form__field" />
+					</dd>
+				</dl>
+				<dl>
+					<dt><label for="address" class="form__title">address</label></dt>
+					<dd>
+						<textarea id="address" name="address" class="form__field form__field--area"></textarea>
+					</dd>
+				</dl>
+				<dl>
+					<dt><label for="price" class="form__title">price</label></dt>
+					<dd>
+						<input type="text" id="price" name="price" value="0" class="form__field"/>
+					</dd>
+				</dl>
+				<dl>
+					<dt><label for="active" class="form__title">is active</label></dt>
+					<dd>
+						<input type="text" id="active" name="active" value="1" class="form__field" />
+					</dd>
+				</dl>
+
+				<div>
+					<button id="submit_buttons" type="submit" class="form__submit-btn">Submit</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="/manager/manager.js"></script>
+
+</html>

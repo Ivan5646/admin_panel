@@ -19,7 +19,7 @@ var uglify = require('gulp-uglify');
 var replace = require('gulp-replace');
 var imagemin = require('gulp-imagemin');
 
-var htmlFile = "item_new";
+var htmlFile = "category_new";
 
 gulp.task('connect', function() {
     connect.server({
@@ -29,7 +29,7 @@ gulp.task('connect', function() {
 });
 
 gulp.task('vendor-styles', function () {
-    return gulp.src(['src/styles/normalize.css', 'node_modules/slick-carousel/slick/slick.scss', 'node_modules/slick-carousel/slick/slick-theme.scss'])
+    return gulp.src(['src/styles/normalize.css'])
         .pipe(concat('vendors.min.css'))
         .pipe(uglifycss())
         .pipe(gulp.dest('build/styles'));
