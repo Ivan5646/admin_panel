@@ -8,13 +8,17 @@
 	<title>Item edit</title>
 	<style>
 		fieldset {
-			border:none;
+			border: none;
 		}
 	</style>
+	<!-- inject:css -->
+	<!-- endinject -->
 </head>
 
 <body>
-		<div>
+	<div class="form">
+		<div class="form__inner">
+			<div>
 				<p>Inactive Items</p>
 				<ul>
 					{% for item in inactive%}
@@ -22,97 +26,101 @@
 					{% end %}
 				</ul>
 			</div>
-	<div class="reformed-form">
-			<img src="" alt="" width="500px" id="image_preview"><br>
-			<fieldset>
-				<label for="image_file">New image</label>
-				<input type="file" id="image_file" onchange="uploadfile();"/>
-			</fieldset>
-		<form method="post" name="manager_template" id="manager_template" action="/manager/item">
-			<fieldset>
-				<label for="code">code</label>
-				<input type="text" id="code" name="code" value="" onchange="check_code('item', 'code')"/>
-			</fieldset>
+			<div class="reformed-form">
+				<img src="" alt="" width="500px" id="image_preview"><br>
+				<fieldset>
+					<label for="image_file">New image</label>
+					<input type="file" id="image_file" onchange="uploadfile();" />
+				</fieldset>
+				<form method="post" name="manager_template" id="manager_template" action="/manager/item">
+					<fieldset>
+						<label for="code">code</label>
+						<input type="text" id="code" name="code" value="" onchange="check_code('item', 'code')" />
+					</fieldset>
 
-			<fieldset>
-				<label for="name">name</label>
-				<input type="text" id="name" name="name" value="" />
-			</fieldset>
+					<fieldset>
+						<label for="name">name</label>
+						<input type="text" id="name" name="name" value="" />
+					</fieldset>
 
-			<fieldset>
-				<label for="description">description</label><br>
-				<textarea cols="100" rows="8" id="description" name="description"></textarea>
-			</fieldset>
+					<fieldset>
+						<label for="description">description</label><br>
+						<textarea id="description" name="description" class="form__field form__field--area"></textarea>
+					</fieldset>
 
-			<fieldset>
-				<label for="description">description2</label><br>
-				<textarea cols="100" rows="8" id="description2" name="description2"></textarea>
-			</fieldset>
+					<fieldset>
+						<label for="description">description2</label><br>
+						<textarea id="description2" name="description2"
+							class="form__field form__field--area"></textarea>
+					</fieldset>
 
-			<fieldset>
-				<label for="active">is active</label>
-				<input type="text" id="active" name="active" value="" />
-			</fieldset>
+					<fieldset>
+						<label for="active">is active</label>
+						<input type="text" id="active" name="active" value="" />
+					</fieldset>
 
-			<fieldset>
-				<label for="image">image</label>
-				<input type="text" id="image" readonly name="image" value="" />
-			</fieldset>
+					<fieldset>
+						<label for="image">image</label>
+						<input type="text" id="image" readonly name="image" value="" />
+					</fieldset>
 
-			<fieldset>
-				<label for="category">category</label>
-				<select id="category" name="category">
-					{% for categeory in categories %}
-					<option value="{{categeory['name']}}" >
-						{{categeory['title']}}{{categeory['active']}}</option>
-					{% end %}
-				</select>
-			</fieldset>
+					<fieldset>
+						<label for="category">category</label>
+						<select id="category" name="category">
+							{% for categeory in categories %}
+							<option value="{{categeory['name']}}">
+								{{categeory['title']}}{{categeory['active']}}</option>
+							{% end %}
+						</select>
+					</fieldset>
 
-			<fieldset>
-				<label for="old_price">old_price</label>
-				<input type="text" id="old_price" name="old_price" value="" />
-			</fieldset>
+					<fieldset>
+						<label for="old_price">old_price</label>
+						<input type="text" id="old_price" name="old_price" value="" />
+					</fieldset>
 
-			<fieldset>
-				<label for="price">price</label>
-				<input type="text" id="price" name="price" value="0" onchange="count_economics()" />
-			</fieldset>
+					<fieldset>
+						<label for="price">price</label>
+						<input type="text" id="price" name="price" value="0" onchange="count_economics()" />
+					</fieldset>
 
-			<fieldset>
-				<label for="ntz_price">ntz_price</label>
-				<input type="text" id="ntz_price" name="ntz_price" value="0" onchange="count_economics()" />
-			</fieldset>
+					<fieldset>
+						<label for="ntz_price">ntz_price</label>
+						<input type="text" id="ntz_price" name="ntz_price" value="0" onchange="count_economics()" />
+					</fieldset>
 
-			<fieldset>
-				<label for="purchase_price">purchase_price</label>
-				<input type="text" id="purchase_price" name="purchase_price" value="0" onchange="count_economics()" />
-			</fieldset>
+					<fieldset>
+						<label for="purchase_price">purchase_price</label>
+						<input type="text" id="purchase_price" name="purchase_price" value="0"
+							onchange="count_economics()" />
+					</fieldset>
 
-			<fieldset>
-				<label for="weight">weight</label>
-				<input type="text" id="weight" name="weight" value="0" />
-			</fieldset>
+					<fieldset>
+						<label for="weight">weight</label>
+						<input type="text" id="weight" name="weight" value="0" />
+					</fieldset>
 
-			<fieldset>
+					<fieldset>
 
-				<label for="sort_order">sort order</label>
-				<input type="text" id="sort_order" name="sort_order" value="0" />
-			</fieldset>
-			<p>
-				<p>Economics</p>
-				<p id="count_economics">
-					Tax: <span id="count_tax"></span> {{currency}}<br>
-					Marketing: <span id="marketing"></span> {{currency}}<br>					
-					Merchant revenue: <span id="count_revenue"></span> {{currency}}<br>
-					Merchant profit: <b><span id="count_profit"></span></b> {{currency}}<br>
-					<span id="warning"></span>
-				</p>
-			</p>
-			<div>
-				<button type="submit" id="submit_buttons">Submit</button>
+						<label for="sort_order">sort order</label>
+						<input type="text" id="sort_order" name="sort_order" value="0" />
+					</fieldset>
+					<div class="form__bottom">
+						<p>Economics</p>
+						<p id="count_economics">
+							Tax: <span id="count_tax"></span> {{currency}}<br>
+							Marketing: <span id="marketing"></span> {{currency}}<br>
+							Merchant revenue: <span id="count_revenue"></span> {{currency}}<br>
+							Merchant profit: <b><span id="count_profit"></span></b> {{currency}}<br>
+							<span id="warning"></span>
+						</p>
+						<div>
+							<button type="submit" id="submit_buttons" class="form__submit-btn">Submit</button>
+						</div>
+					</div>
+				</form>
 			</div>
-		</form>
+		</div>
 	</div>
 
 	<script>
