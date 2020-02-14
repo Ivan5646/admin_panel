@@ -19,7 +19,7 @@ var uglify = require('gulp-uglify');
 var replace = require('gulp-replace');
 var imagemin = require('gulp-imagemin');
 
-var htmlFile = "category_new";
+var htmlFile = "pickup_new";
 
 gulp.task('connect', function() {
     connect.server({
